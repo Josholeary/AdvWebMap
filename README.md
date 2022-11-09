@@ -23,5 +23,8 @@ GitHub link: https://github.com/Josholeary/AdvWebMap
 - Database Updating
 ![DBUpdated](screenshots/DBUpdated.png)
 
-- Final step of deployment (Nginx fail)
+- Final step of deployment (Nginx fail):
+
+I set up my domain name on Namecheap and a Digital Ocean droplet with all docker containers installed and running besides Nginx which caused an issue with deployment. I tried to resolve this issue but the port was occupied and the articles revolving around this issue did not have a resolution.
+
 ![Error](screenshots/Nginxfail.png)
