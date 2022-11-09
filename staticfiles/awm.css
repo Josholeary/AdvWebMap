@@ -1,0 +1,65 @@
+body {
+    background-color: #202124;
+    color: whitesmoke;
+    text-align: center;
+    font-family: monospace;
+}
+
+h2 {
+    font-size: 300%;
+    margin-bottom: 2%;
+}
+
+.content {
+    margin: 2%;
+}
+
+.content p {
+    font-size: 135%;
+}
+
+.logbut a {
+    font-size: 170%;
+    width: 15%;
+}
+
+form input {
+    width: 100%;
+    font-size: 150%;
+}
+
+label {
+    font-size: 150%;
+}
+
+button {
+    width: 75%;
+}
+
+#map {
+    width: 100%;
+    height: 90vh;
+}
+
+.navigation a {
+    color: whitesmoke;
+    text-decoration: underline;
+}
+
+.navigation a:hover{
+    color: green;
+    text-decoration: overline;
+}
+
+a {
+    margin: 0.5%;
+}
+
+button {
+    margin: 3%;
+}
+
+.coord {
+    margin-left: 12%;
+}
+

@@ -20,3 +20,6 @@
 
 - Database Updating
 ![DBUpdated](screenshots/DBUpdated.png)
+
+- Final step of deployment (Nginx fail)
+![Error](screenshots/Nginxfail.png)

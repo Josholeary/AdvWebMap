@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import os
+from decouple import config
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -161,7 +165,84 @@ LEAFLET_CONFIG = {
     'OPACITY': 0.5,
 }
 
+SECRET_KEY = config('SECRET_KEY', default=None)
+DEPLOY_SECURE = config('DEPLOY_SECURE', default=False, cast=bool)
+
+if DEPLOY_SECURE:
+    DEBUG = False
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+    CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')])
+else:
+    DEBUG = True
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    ALLOWED_HOSTS = []
+
+if os.environ.get('CONDA_PREFIX','').startswith('/opt'):
+    DATABASES = {'default': config('DATABASE_DOCKER', default=None, cast=dj_database_url.parse)}
+else:
+    DATABASES = {'default': config('DATABASE_LOCAL', default=None, cast=dj_database_url.parse)}
+
 # List of commands to remember docker details:
 #docker create --name pgis --network awm --network-alias pgisawm -t -p 25432:5432 -e POSTGRES_USER=docker -e POSTGRES_PASS=docker -v pgis_vol:/var/lib/postgresql kartoza/postgis
 #docker create --name pgad --network awm --network-alias pgadawm -t -v pgad_vol:/var/lib/pgadmin -p 20080:80 -e 'PGADMIN_DEFAULT_EMAIL=c19381781@mytudublin.ie' -e 'PGADMIN_DEFAULT_PASSWORD=wordpass' dpage/pgadmin4
 #docker create --name awm_container --network awm --network-alias cawm -t -p 8001:8001 awm
+
+
+# docker create --name wmap_nginx_certbot --network wmap_network --network-alias wmap-nginx-certbot -p 80:80 -p 443:443 -t -v wmap_web_data:/usr/share/nginx/html -v $HOME/wmap_nginx_certbot/conf:/etc/nginx/conf.d -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot  wmap_nginx_certbot
+# docker create --name wmap_pgadmin4 --network wmap_network --network-alias wmap-pgadmin4 -t -v wmap_pgadmin_data:/var/lib/pgadmin -e 'PGADMIN_DEFAULT_EMAIL=c19381781@tudublin.ie' -e 'PGADMIN_DEFAULT_PASSWORD=mypassword' dpage/pgadmin4
+
+# docker create --name awmca --network wmap_network --network-alias awmca -t awmca
+
+# docker create --name awmca --network wmap_network --network-alias awmca -t awmca
+
+'''
+server {
+    listen 80;
+    server_name .josholeary.one;
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+    }
+
+server {
+    listen 443 ssl;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    server_name .josholeary.one;
+
+    ssl_certificate /etc/letsencrypt/live/josholeary.one/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/josholeary.one/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location /pgadmin4 {
+        proxy_set_header X-Script-Name /pgadmin4;
+        proxy_pass http://wmap-pgadmin4;
+    }
+
+    # Some updates here
+    # include uwsgi_params;
+    location / {
+        proxy_pass http://wmap-django:8001;
+    }
+
+    # uwsgi_param Host $host;
+    # uwsgi_param X-Real-IP $remote_addr;
+    # uwsgi_param X-Forwarded-For $proxy_add_x_forwarded_for;
+    # uwsgi_param X-Forwarded-Proto $http_x_forwarded_proto;
+
+    }
+'''
