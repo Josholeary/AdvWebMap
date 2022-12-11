@@ -2,8 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% load pwa %}
+    {% progressive_web_app_meta %}
   <meta charset="utf-8">
-  <title>{% block title %}Advanced Web Mapping{% endblock %}</title>
+  <title>{% block title %}Bike Parking{% endblock %}</title>
 
     <!-- FONTS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,7 +32,7 @@
       {% endblock %}
   </main>
   <footer class="bg-dark fixed-bottom text-center text-white">
-      Josh O'Leary - AWM2022 CA1
+      Josh O'Leary - ParkBike
   </footer>
 
   <!-- JQUERY SCRIPT -->
@@ -46,8 +48,13 @@
         let csrftoken = '{{csrf_token}}'
     </script>
 
+  <script>
+      let bp = '{% static 'bike.geojson' %}';
+      let bike = '{% static 'images/bike.png' %}';
+  </script>
   <!-- JS -->
-  <script type="text/javascript" src="{% static 'script.js' %}"></script>
+  <script type="text/javascript" src="{% static 'script.js' %}">
+  </script>
 
 
 

@@ -10,6 +10,25 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.locate({setView: true, maxZoom: 16});
 
 
+let Picon = L.icon({
+    iconUrl: bike,
+    iconSize: [50, 50],
+});
+
+fetch(bp)
+    .then(function (resp){
+        return resp.json();
+    }).then(function (data){
+        L.geoJson(data, {
+            onEachFeature: function (feature, layer){
+            layer.bindPopup(feature.properties.operator);
+            },
+        }).addTo(map);
+});
+
+
+
+
 // https://leafletjs.com/examples/mobile/
 
 function onLocationFound(event) {
@@ -21,7 +40,7 @@ function onLocationFound(event) {
     document.getElementById('coordinates').innerHTML = coord;
     let popbox = "Your location is within: " + rad+"M";
     area = L.circle(position, rad).addTo(map);
-    let marker = L.marker(position).addTo(map);
+    let marker = L.marker(position, {icon: Picon}).addTo(map);
     marker.bindPopup(popbox).openPopup();
     marker.getPopup().setContent(popbox);
     marker.setLatLng(position);
@@ -39,5 +58,7 @@ function onLocationFound(event) {
             return response.json()
         })
 }
+
+
 
 map.on('locationfound', onLocationFound);

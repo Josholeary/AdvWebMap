@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-import os
 from decouple import config
 import dj_database_url
 
@@ -46,6 +45,7 @@ INSTALLED_APPS = [
     'world',
     'crispy_forms',
     'leaflet',
+    'pwa',
 ]
 
 
@@ -185,18 +185,41 @@ if os.environ.get('CONDA_PREFIX','').startswith('/opt'):
 else:
     DATABASES = {'default': config('DATABASE_LOCAL', default=None, cast=dj_database_url.parse)}
 
+
+PWA_APP_NAME = 'AWM2022'
+PWA_APP_DESCRIPTION = "Advanced Web Mapping PWA"
+PWA_APP_THEME_COLOR = '#000000'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': 'static/images/icon-160x160.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': 'static/images/icon-160x160.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': 'static/images/icon.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
 # List of commands to remember docker details:
-#docker create --name pgis --network awm --network-alias pgisawm -t -p 25432:5432 -e POSTGRES_USER=docker -e POSTGRES_PASS=docker -v pgis_vol:/var/lib/postgresql kartoza/postgis
-#docker create --name pgad --network awm --network-alias pgadawm -t -v pgad_vol:/var/lib/pgadmin -p 20080:80 -e 'PGADMIN_DEFAULT_EMAIL=c19381781@mytudublin.ie' -e 'PGADMIN_DEFAULT_PASSWORD=wordpass' dpage/pgadmin4
-#docker create --name awm_container --network awm --network-alias cawm -t -p 8001:8001 awm
 
+# docker create --name certbot --network wmap_network --network-alias certbot -p 80:80 -p 443:443 -t -v wmap_web_data:/usr/share/nginx/html -v $HOME/wmap_nginx_certbot/conf:/etc/nginx/conf.d -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot wmap_nginx_certbot
 
-# docker create --name wmap_nginx_certbot --network wmap_network --network-alias wmap-nginx-certbot -p 80:80 -p 443:443 -t -v wmap_web_data:/usr/share/nginx/html -v $HOME/wmap_nginx_certbot/conf:/etc/nginx/conf.d -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot  wmap_nginx_certbot
-# docker create --name wmap_pgadmin4 --network wmap_network --network-alias wmap-pgadmin4 -t -v wmap_pgadmin_data:/var/lib/pgadmin -e 'PGADMIN_DEFAULT_EMAIL=c19381781@tudublin.ie' -e 'PGADMIN_DEFAULT_PASSWORD=mypassword' dpage/pgadmin4
-
-# docker create --name awmca --network wmap_network --network-alias awmca -t awmca
-
-# docker create --name awmca --network wmap_network --network-alias awmca -t awmca
+# wordPass1s
 
 '''
 server {

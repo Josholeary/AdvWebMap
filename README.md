@@ -1,30 +1,44 @@
-# Advanced Web Map
+# Advanced Web Mapping CA2
+
+## BikePark
+This web application allows users to set up an account and login in order to locate their current position on the map. It then finds nearby places to park your bike so you have places to end your journey while travelling throughout Ireland. It saves your last location to the database so you can see where your bike was last parked. This web application is a progressive web app so it can be installed from the browser and added to the home screen.
 
 GitHub link: https://github.com/Josholeary/AdvWebMap
+
+Deployment Link: http://www.josholeary.one/
 
 ## Technologies:
 - Django
 - Leaflet JS
 - PostgreSQL
 - Docker
+- Django-PWA
+- Overpass API
 
 
-## Pages:
+## Screenshots:
 
-- Location Page
+- Location and Bikes Parking Page
 ![Map](screenshots/Map.png)
+
+- Arrival Page
+![Arrival](screenshots/Arrival.png)
+
+- Signup Page
+![Signup](screenshots/SignUp.png)
 
 - Login Page
 ![Login](screenshots/Login.png)
 
-- Signup Page
-![Signup](screenshots/Signup.png)
+- PWA Install Prompt
+![InstallPrompt](screenshots/installPrompt.png)
+
+- PWA File
+![PWAFile](screenshots/PWAFile.png)
+
+- PWA MAP
+![PWAMap](screenshots/PWAmap.png)
 
 - Database Updating
 ![DBUpdated](screenshots/DBUpdated.png)
 
-- Final step of deployment (Nginx fail):
-
-I set up my domain name on Namecheap and a Digital Ocean droplet with all docker containers installed and running besides Nginx which caused an issue with deployment. I tried to resolve this issue but the port was occupied and the articles revolving around this issue did not have a resolution.
-
-![Error](screenshots/Nginxfail.png)

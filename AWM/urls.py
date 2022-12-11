@@ -21,4 +21,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('world.urls')),
+    # Django PWA is deprecated with Django beyond 4.0 due to Django.conf.urls
+    # After a lot of research the following pull request was found in relation to the matter:
+    # https://stackoverflow.com/questions/71713923/django-pwa-error-cannot-import-name-url-from-django-conf-urls
+    # First approach was to change the source code of Django-PWA but this is impossible to deploy in a docker container
+    # Instead Django was set to 3.2.16
+    path('', include('pwa.urls')),
 ]
