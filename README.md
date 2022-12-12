@@ -5,7 +5,7 @@ This web application allows users to set up an account and login in order to loc
 
 GitHub link: https://github.com/Josholeary/AdvWebMap
 
-Deployment Link: http://www.josholeary.one/
+Deployment Link: https://josholeary.one/
 
 ## Technologies:
 - Django
@@ -17,6 +17,10 @@ Deployment Link: http://www.josholeary.one/
 
 
 ## Screenshots:
+
+
+- Deployed Web Application
+![Deployed](screenshots/HostedApp.png)
 
 - Location and Bikes Parking Page
 ![Map](screenshots/Map.png)
